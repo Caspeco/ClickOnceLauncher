@@ -68,6 +68,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestFiles\Azure Explorer.application" />
+    <None Include="TestFiles\Azure Explorer.appref-ms" />
     <None Include="TestFiles\GitHub.application" />
     <None Include="TestFiles\GitHub.appref-ms" />
     <None Include="TestFiles\GitHub.exe.manifest" />
