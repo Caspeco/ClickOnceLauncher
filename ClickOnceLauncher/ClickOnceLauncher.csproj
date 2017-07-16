@@ -62,12 +62,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClickOnce\Application.cs" />
     <Compile Include="ClickOnce\Asmv1\Application.cs" />
     <Compile Include="ClickOnce\Asmv1\Constants.cs" />
     <Compile Include="ClickOnce\Asmv1\Manifest.cs" />
     <Compile Include="ClickOnce\Asmv1\Tools.cs" />
     <Compile Include="ClickOnceLauncherProgram.cs" />
+    <Compile Include="ClickOnce\Dependency.cs" />
+    <Compile Include="ClickOnce\EntryPoint.cs" />
     <Compile Include="ClickOnce\ILog.cs" />
+    <Compile Include="ClickOnce\Manifest.cs" />
+    <Compile Include="ClickOnce\Tools.cs" />
+    <Compile Include="ClickOnce\ValidationDigestException.cs" />
+    <Compile Include="ClickOnce\ValidationException.cs" />
+    <Compile Include="ClickOnce\ValidationSizeException.cs" />
     <Compile Include="LogConsole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
