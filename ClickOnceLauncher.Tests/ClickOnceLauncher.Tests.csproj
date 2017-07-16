@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClickOnceTests\Asmv1\AssemblyXmlSerializationTests.cs" />
+    <Compile Include="ClickOnceTests\ManifestTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
