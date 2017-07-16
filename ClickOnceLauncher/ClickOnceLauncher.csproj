@@ -67,6 +67,8 @@
     <Compile Include="ClickOnce\Asmv1\Manifest.cs" />
     <Compile Include="ClickOnce\Asmv1\Tools.cs" />
     <Compile Include="ClickOnceLauncherProgram.cs" />
+    <Compile Include="ClickOnce\ILog.cs" />
+    <Compile Include="LogConsole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

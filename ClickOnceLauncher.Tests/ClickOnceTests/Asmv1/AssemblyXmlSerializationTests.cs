@@ -10,6 +10,7 @@ namespace ClickOnceLauncher.Tests.ClickOnceTests.Asmv1
 {
     public class AssemblyXmlSerializationTests
     {
+        public static ClickOnce.ILog Console = LogConsole.Shared;
         public static readonly string TestFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "TestFiles");
 
         public static IEnumerable<object[]> GetTestFiles()
@@ -30,7 +31,7 @@ namespace ClickOnceLauncher.Tests.ClickOnceTests.Asmv1
             {
                 ClickOnce.Asmv1.Tools.Serialize(writer, asmObject);
                 writer.Close();
-                System.Diagnostics.Debug.Print(writer.ToString());
+                Console.WriteLine(writer.ToString());
                 // Namespace prefix not found
                 Assert.Contains("<asmv1:assembly", writer.ToString());
                 // Another Namespace prefix not found
@@ -45,13 +46,13 @@ namespace ClickOnceLauncher.Tests.ClickOnceTests.Asmv1
             // Test to ensure that all data available in .application and .manifest is available on deserialize
             // Quite a lot of hacks to ignore XML namespaces
 
-            System.Diagnostics.Debug.Print(testfile);
+            Console.WriteLine(testfile);
             string contents = File.ReadAllText(testfile);
             if (!contents.Contains("<?xml "))
             {
                 // TODO use separate function to identify filetype
-                System.Diagnostics.Debug.Print(" not XML data - assuming appref-ms");
-                System.Diagnostics.Debug.Print(contents);
+                Console.WriteLine(" not XML data - assuming appref-ms");
+                Console.WriteLine(contents);
                 Assert.EndsWith(".appref-ms", testfile);
                 return;
             }
@@ -112,7 +113,7 @@ namespace ClickOnceLauncher.Tests.ClickOnceTests.Asmv1
                 //contents = contents.Replace("</dependency><dependency><dependentAssembly", string.Empty);
 
                 Assert.Equal(contents, outData);
-                System.Diagnostics.Debug.Print(writer.ToString());
+                Console.WriteLine(writer.ToString());
             }
         }
     }
