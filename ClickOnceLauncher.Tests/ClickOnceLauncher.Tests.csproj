@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClickOnceTests\ArgumentParserTests.cs" />
     <Compile Include="ClickOnceTests\Asmv1\AssemblyXmlSerializationTests.cs" />
     <Compile Include="ClickOnceTests\ManifestTests.cs" />
   </ItemGroup>

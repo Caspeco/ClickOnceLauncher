@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArgumentParser.cs" />
     <Compile Include="ClickOnce\Application.cs" />
     <Compile Include="ClickOnce\Asmv1\Application.cs" />
     <Compile Include="ClickOnce\Asmv1\Constants.cs" />
