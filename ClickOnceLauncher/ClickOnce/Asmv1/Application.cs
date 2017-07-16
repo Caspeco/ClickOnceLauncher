@@ -123,6 +123,10 @@ namespace ClickOnce.Asmv1
         /// <remarks/>
         [XmlAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = NS_ASMV2)]
         public string supportUrl { get; set; }
+
+        /// <remarks/>
+        [XmlText]
+        public string Value { get; set; }
     }
 
     /// <remarks/>
@@ -201,6 +205,24 @@ namespace ClickOnce.Asmv1
     {
         /// <remarks/>
         public object beforeApplicationStartup { get; set; }
+
+        /// <remarks/>
+        public deploymentSubscriptionUpdateExpiration expiration { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable]
+    [DesignerCategory(CODE)]
+    [XmlType(AnonymousType = true, Namespace = NS_ASMV2)]
+    public partial class deploymentSubscriptionUpdateExpiration
+    {
+        /// <remarks/>
+        [XmlAttribute]
+        public int maximumAge { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute]
+        public string unit { get; set; }
     }
 
     /// <remarks/>
