@@ -75,6 +75,7 @@
     <None Include="TestFiles\GitHub.application" />
     <None Include="TestFiles\GitHub.appref-ms" />
     <None Include="TestFiles\GitHub.exe.manifest" />
+    <None Include="TestFiles\RedGate.AzureExplorer.UI.exe.manifest" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClickOnceLauncher\ClickOnceLauncher.csproj">
