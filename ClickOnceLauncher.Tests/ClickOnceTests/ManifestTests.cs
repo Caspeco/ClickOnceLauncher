@@ -15,6 +15,24 @@ namespace ClickOnceLauncher.Tests.ClickOnceTests
     public class ManifestTests
     {
         public static ClickOnce.ILog Console = LogConsole.Shared;
+        public static readonly DirectoryInfo TestFilesPath = GetTestDirectory();
+
+        public static DirectoryInfo GetTestDirectory()
+        {
+            var path = new DirectoryInfo(Path.GetDirectoryName(typeof(ManifestTests).Assembly.Location));
+            while (path is not null)
+            {
+                var testPath = path
+                    .EnumerateDirectories("TestFiles", SearchOption.AllDirectories)
+                    .FirstOrDefault();
+                if (testPath is not null)
+                {
+                    return testPath;
+                }
+                path = path.Parent;
+            }
+            throw new DirectoryNotFoundException();
+        }
 
         private static string _appData;
         public static string GetTempPath()
@@ -29,13 +47,13 @@ namespace ClickOnceLauncher.Tests.ClickOnceTests
         }
 
         [Theory]
-        [InlineData(@"..\..\TestFiles\GitHub.appref-ms")]
-        [InlineData(@"..\..\TestFiles\Azure Explorer.appref-ms")]
+        [InlineData(@"GitHub.appref-ms")]
+        [InlineData(@"Azure Explorer.appref-ms")]
         public void ValidateDownloadIntegrationTest(string testfile)
         {
             var app = new ClickOnce.Application();
             app.BasePath = GetTempPath();
-            app.Load(testfile);
+            app.Load(Path.Combine(TestFilesPath.FullName, testfile));
             var depAsm = app.LastLoadedManifest;
             // always true in App
             Assert.True(app.LastLoadedApp.Install.HasValue);
@@ -85,23 +103,25 @@ namespace ClickOnceLauncher.Tests.ClickOnceTests
             Assert.Contains(entry.Product + ".appref-ms", deps.Select(d => Path.GetFileName(d.Codebase)));
             Assert.Contains(entry.Executable, deps.Select(d => Path.GetFileName(d.Codebase)));
 
-            Assert.Equal(1, deps.Where(d => Path.GetExtension(d.Codebase) == ".manifest").Count());
-            Assert.Equal(1, deps.Where(d => Path.GetExtension(d.Codebase) == ".application").Count());
-            Assert.Equal(1, deps.Where(d => Path.GetFileName(d.Codebase) == entry.Executable).Count());
-            Assert.Equal(1, deps.Where(d => Path.GetFileName(d.Codebase) == entry.Product + ".appref-ms").Count());
+            Assert.Single(deps, d => Path.GetExtension(d.Codebase) == ".manifest");
+            Assert.Single(deps, d => Path.GetExtension(d.Codebase) == ".application");
+            Assert.Single(deps, d => Path.GetFileName(d.Codebase) == entry.Executable);
+            Assert.Single(deps, d => Path.GetFileName(d.Codebase) == entry.Product + ".appref-ms");
         }
 
         [Theory]
         //[MemberData(nameof(GetTestFiles))]
-        [InlineData(@"..\..\TestFiles\GitHub.appref-ms")]
-        [InlineData(@"..\..\TestFiles\Azure Explorer.appref-ms")]
+        [InlineData(@"GitHub.appref-ms")]
+        [InlineData(@"Azure Explorer.appref-ms")]
         public void ValidateSignaturesTest(string testfile)
         {
             Console.WriteLine(testfile);
             string location = testfile;
             if (!testfile.StartsWith("http:") && !testfile.StartsWith("https:"))
             {
-                string contents = File.ReadAllText(testfile);
+                location = Path.Combine(TestFilesPath.FullName, testfile);
+                Console.WriteLine(location);
+                string contents = File.ReadAllText(location);
                 if (!contents.Contains("<?xml "))
                 {
                     // TODO use separate function to identify filetype
@@ -181,12 +201,12 @@ namespace ClickOnceLauncher.Tests.ClickOnceTests
         }
 
         [Theory]
-        [InlineData(@"..\..\TestFiles\GitHub.appref-ms")]
-        [InlineData(@"..\..\TestFiles\Azure Explorer.appref-ms")]
+        [InlineData(@"GitHub.appref-ms")]
+        [InlineData(@"Azure Explorer.appref-ms")]
         public void GenerateApprefMsStringTest(string orgappref)
         {
             Console.WriteLine(orgappref);
-            string contents = File.ReadAllText(orgappref);
+            string contents = File.ReadAllText(Path.Combine(TestFilesPath.FullName, orgappref));
             string newPath = contents.Substring(0, contents.IndexOf("#"));
             var asm = new ClickOnce.Manifest(newPath);
 

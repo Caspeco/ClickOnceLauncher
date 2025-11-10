@@ -1,7 +1,6 @@
 ﻿
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Xunit;
@@ -11,12 +10,11 @@ namespace ClickOnceLauncher.Tests.ClickOnceTests.Asmv1
     public class AssemblyXmlSerializationTests
     {
         public static ClickOnce.ILog Console = LogConsole.Shared;
-        public static readonly string TestFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "TestFiles");
 
         public static IEnumerable<object[]> GetTestFiles()
         {
-            foreach (string file in Directory.GetFiles(TestFilesPath))
-                yield return new object[] { file };
+            foreach (var file in ManifestTests.TestFilesPath.GetFiles())
+                yield return new object[] { file.FullName };
         }
 
         [Fact]
